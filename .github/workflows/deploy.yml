@@ -1,21 +1,31 @@
-name: Deploy Vulnerable Application                                  # workflow name
+name: Deploy Vulnerable Application
 
 on:
   push:
     branches:
       - master
+
 jobs:
   deploy-heroku:
-    name: Deploy Heroku
+    name: Deploy to Heroku
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "vuln-app-mariano-ivasiuta" #Must be unique in Heroku
-          heroku_email: "ivasiuta.mariano@gmail.com"
-          usedocker: true
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Build, Push and Release to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          docker build -t registry.heroku.com/vuln-app-mariano-ivasiuta/web .
+          docker push registry.heroku.com/vuln-app-mariano-ivasiuta/web
+          
+          # Install Heroku CLI
+          curl https://cli-assets.heroku.com/install.sh | sh
+          
+          # Release the container
+          heroku container:release web -a vuln-app-mariano-ivasiuta
 
 
 
