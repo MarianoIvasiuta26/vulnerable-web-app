@@ -3,7 +3,7 @@ name: Deploy Vulnerable Application                                  # workflow 
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy-heroku:
     name: Deploy Heroku
@@ -13,28 +13,10 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "app-vulnerable2022" #Must be unique in Heroku
-          heroku_email: "roxsrossve@gmail.com"
-          remote_branch: "master"
+          heroku_app_name: "vuln-app-mariano-ivasiuta" #Must be unique in Heroku
+          heroku_email: "ivasiuta.mariano@gmail.com"
+          remote_branch: "main"
           usedocker: true
-  
-  deploy-vercel:
-    name: Deploy Vercel
-    runs-on: ubuntu-latest
-    environment: Production
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod"
 
 
