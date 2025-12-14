@@ -9,13 +9,12 @@ jobs:
     name: Deploy Heroku
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "vuln-app-mariano-ivasiuta" #Must be unique in Heroku
           heroku_email: "ivasiuta.mariano@gmail.com"
-          remote_branch: "master"
           usedocker: true
 
 
