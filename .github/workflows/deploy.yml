@@ -3,7 +3,7 @@ name: Deploy Vulnerable Application                                  # workflow 
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   deploy-heroku:
     name: Deploy Heroku
@@ -15,7 +15,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "vuln-app-mariano-ivasiuta" #Must be unique in Heroku
           heroku_email: "ivasiuta.mariano@gmail.com"
-          remote_branch: "main"
+          remote_branch: "master"
           usedocker: true
 
 
